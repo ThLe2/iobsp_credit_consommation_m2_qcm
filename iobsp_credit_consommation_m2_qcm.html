@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QCM du module 2 — Les formes de crédit et les crédits de trésorerie</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#16243B; --blue:#1F4E79; --blue-2:#2E75B6; --paper:#F5F2EB;
+    --card:#FFFFFF; --ink:#1d2733; --muted:#5d6b7a; --line:#e3ddd0; --gold:#B08D57;
+    --ok:#2F7A4F; --ok-bg:#EAF4ED; --ko:#B23B3B; --ko-bg:#FAEDED;
+    --amber:#B5852A; --amber-bg:#FBF1DC;
+    --shadow:0 1px 2px rgba(22,36,59,.05),0 8px 24px rgba(22,36,59,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Karla',-apple-system,system-ui,sans-serif;background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:28px 20px 64px}
+  .card-main{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden}
+  .header{background:var(--navy);color:#fff;padding:30px 34px}
+  .chapter-tag{display:inline-block;background:rgba(255,255,255,.14);color:#e9eef6;padding:5px 13px;border-radius:99px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+  .chapter-tag span{color:var(--gold)}
+  .header h1{font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(23px,4.2vw,33px);line-height:1.14;letter-spacing:-.01em;margin-bottom:8px}
+  .header p{font-size:14px;color:#b9c4d4}
+  .gold-rule{height:3px;width:60px;background:var(--gold);border:0;margin:16px 0 0}
+  .body{padding:30px 34px}
+  .identity{text-align:center;padding:14px 0}
+  .identity h2{font-family:'Fraunces',serif;font-weight:600;font-size:21px;color:var(--navy);margin-bottom:8px}
+  .identity p.sub{color:var(--muted);margin-bottom:26px;font-size:14.5px}
+  .form-group{margin-bottom:16px;text-align:left;max-width:420px;margin-left:auto;margin-right:auto}
+  .form-group label{display:block;font-size:13px;font-weight:700;color:var(--navy);margin-bottom:6px;letter-spacing:.02em}
+  .form-group input{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:9px;font-size:15px;font-family:'Karla',sans-serif;transition:border-color .2s;background:#fdfcf9}
+  .form-group input:focus{outline:none;border-color:var(--blue-2)}
+  .btn{cursor:pointer;font-family:'Karla',sans-serif;font-weight:700;font-size:15px;letter-spacing:.03em;border-radius:10px;transition:transform .12s,box-shadow .15s,filter .15s,background .15s}
+  .btn-primary{background:var(--blue);color:#fff;border:none;padding:13px 34px;margin:6px}
+  .btn-primary:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 20px rgba(31,78,121,.28)}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed}
+  .btn-gold{background:var(--gold);color:var(--navy)}
+  .btn-gold:hover:not(:disabled){filter:brightness(1.06);transform:translateY(-2px)}
+  .btn-secondary{background:#fff;color:var(--blue);border:1.5px solid var(--blue);padding:11px 28px;margin:6px}
+  .btn-secondary:hover:not(:disabled){background:#f0f4f9}
+  .btn-secondary:disabled{opacity:.4;cursor:not-allowed;border-color:#bbb;color:#bbb}
+  .stagiaire-bar{background:#efeadf;padding:11px 34px;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  .stagiaire-bar strong{color:var(--navy)}
+  .consigne{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:12px 16px;margin-bottom:20px;font-size:13.5px;line-height:1.5;color:#3a4654}
+  .consigne b{color:var(--navy)}
+  .meta{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .progress{flex:1;min-width:180px}
+  .progress .track{height:8px;background:#e6e0d3;border-radius:99px;overflow:hidden}
+  .progress .fill{height:100%;width:0;background:var(--blue-2);border-radius:99px;transition:width .4s cubic-bezier(.2,.7,.2,1)}
+  .progress .plabel{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .scorepill{font-family:'Fraunces',serif;font-weight:600;color:var(--navy);background:#fff;border:1px solid var(--line);border-radius:99px;padding:7px 15px;font-size:14.5px}
+  .scorepill b{color:var(--blue);font-size:17px}
+  .cq{background:#fff;border:1px solid var(--line);border-radius:11px;padding:16px 18px;margin-bottom:13px;box-shadow:var(--shadow)}
+  .cq .ask{font-weight:600;font-size:15px;color:var(--ink);margin-bottom:10px;display:flex;gap:10px;align-items:flex-start}
+  .cq .ask .qn{flex:none;width:26px;height:26px;border-radius:50%;background:var(--navy);color:#fff;font-family:'Fraunces',serif;font-weight:600;font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:1px}
+  .theme-tag{display:inline-block;background:#eef3f9;color:var(--blue);font-size:11px;font-weight:700;border-radius:5px;padding:2px 8px;margin-left:8px;letter-spacing:.02em;vertical-align:middle;white-space:nowrap}
+  .multi-tag{display:inline-block;background:#fbf1dc;color:var(--amber);font-size:11px;font-weight:700;border-radius:5px;padding:2px 8px;margin-left:6px;letter-spacing:.02em;vertical-align:middle;white-space:nowrap}
+  select.cs{width:100%;padding:11px 13px;border:1.5px solid var(--line);border-radius:9px;font-size:14.5px;font-family:'Karla',sans-serif;background:#fdfcf9;color:var(--ink);cursor:pointer;transition:border-color .15s}
+  select.cs:focus{outline:none;border-color:var(--blue-2)}
+  select.cs:disabled{cursor:default;opacity:1}
+  select.cs.ok{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+  select.cs.ko{border-color:var(--ko);background:var(--ko-bg);color:var(--ko)}
+  .checks{display:flex;flex-direction:column;gap:8px}
+  .checks label{display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--line);border-radius:9px;padding:10px 13px;background:#fdfcf9;cursor:pointer;font-size:14.5px;transition:.15s}
+  .checks label:hover{border-color:var(--blue-2)}
+  .checks label.ok{border-color:var(--ok);background:var(--ok-bg)}
+  .checks label.ko{border-color:var(--ko);background:var(--ko-bg)}
+  .checks input{margin-top:3px}
+  .open-tag{display:inline-block;background:#eaf4ed;color:var(--ok);font-size:11px;font-weight:700;border-radius:5px;padding:2px 8px;margin-left:6px;letter-spacing:.02em;vertical-align:middle;white-space:nowrap}
+  textarea.oa{width:100%;min-height:96px;padding:11px 13px;border:1.5px solid var(--line);border-radius:9px;font-size:14.5px;font-family:'Karla',sans-serif;background:#fdfcf9;color:var(--ink);resize:vertical;line-height:1.5}
+  textarea.oa:focus{outline:none;border-color:var(--blue-2)}
+  textarea.oa:disabled{cursor:default;opacity:1;background:#f7f5ef;border-color:var(--gold)}
+  .oa-hint{font-size:11.5px;color:var(--muted);margin-top:5px;font-style:italic}
+  .model{background:#f7f5ef;border:1px solid var(--gold);border-radius:9px;padding:13px 15px;margin-top:11px}
+  .model h5{margin:0 0 7px;font-family:'Fraunces',Georgia,serif;font-size:14px;color:var(--navy)}
+  .model p{margin:0 0 7px;font-size:13.5px;line-height:1.55}
+  .model ul{margin:6px 0 0;padding-left:17px;font-size:13px}
+  .model li{margin-bottom:3px}
+  .model .ref{color:var(--gold);font-weight:700;font-size:11.5px}
+  .model .note{font-size:12px;color:var(--muted);font-style:italic;margin-top:8px;padding-top:7px;border-top:1px dashed var(--line)}
+  .pass-banner{border-radius:10px;padding:15px 18px;margin:14px 0 4px;font-size:14.5px;line-height:1.55}
+  .pass-banner.ok{background:var(--ok-bg);border:1.5px solid var(--ok);color:#1f5c39}
+  .pass-banner.ko{background:var(--amber-bg);border:1.5px solid var(--amber);color:#8a6420}
+  .pass-banner b{display:block;font-family:'Fraunces',Georgia,serif;font-size:16px;margin-bottom:5px}
+  .cfb{max-height:0;overflow:hidden;opacity:0;transition:max-height .4s,opacity .35s;font-size:13px;border-left:3px solid var(--line);padding-left:14px}
+  .cfb.show{max-height:320px;opacity:1;margin-top:12px}
+  .cfb.good{border-color:var(--ok);color:#1c5234} .cfb.bad{border-color:var(--ko);color:#7a2222}
+  .cfb .vd{font-weight:700}
+  .cfb .ref{display:inline-block;margin-top:6px;font-size:12px;color:var(--blue);background:#eef3f9;border-radius:6px;padding:2px 8px;font-weight:600}
+  .actions{margin-top:24px;text-align:center}
+  .result-screen{text-align:center;padding:20px 0}
+  .score-circle{width:132px;height:132px;border-radius:50%;margin:0 auto 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;box-shadow:0 8px 24px rgba(22,36,59,.18)}
+  .score-circle.excellent{background:var(--ok)} .score-circle.good{background:var(--blue)}
+  .score-circle.average{background:var(--amber)} .score-circle.poor{background:var(--ko)}
+  .score-circle .sv{font-family:'Fraunces',serif;font-size:30px;font-weight:600}
+  .score-circle .sl{font-size:12px;opacity:.95;margin-top:2px;letter-spacing:.05em}
+  .result-msg{font-family:'Fraunces',serif;font-size:21px;font-weight:600;margin-bottom:8px;color:var(--navy)}
+  .result-detail{color:var(--muted);font-size:14px;margin-bottom:20px;max-width:56ch;margin-left:auto;margin-right:auto}
+  .recap{text-align:left;max-width:600px;margin:0 auto 8px}
+  .recap h4{font-family:'Fraunces',serif;font-weight:600;font-size:15px;color:var(--navy);margin-bottom:6px}
+  .recap-row{display:flex;align-items:center;gap:11px;padding:9px 4px;border-bottom:1px solid var(--line);font-size:13.5px}
+  .recap-row .dot{flex:none;width:11px;height:11px;border-radius:50%}
+  .recap-row .lab{flex:1;color:var(--ink)}
+  .recap-row .sc{font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums}
+  .recap-row .hint{flex-basis:100%;font-size:12px;color:var(--blue);padding-left:22px}
+  .pdf-info{background:var(--amber-bg);border-left:4px solid var(--amber);padding:12px 16px;border-radius:8px;text-align:left;font-size:13px;color:#6d4c00;margin:18px 0}
+  .pdf-info strong{display:block;margin-bottom:4px}
+  .note{background:#eef3f9;border-left:4px solid var(--blue-2);padding:12px 16px;border-radius:8px;text-align:left;font-size:13px;color:var(--blue);margin:16px 0;line-height:1.5}
+  footer{margin-top:26px;text-align:center;font-size:12px;color:#9a9384;letter-spacing:.04em}
+</style>
+
+<style>body{-webkit-user-select:none;-moz-user-select:none;user-select:none}
+textarea,input{-webkit-user-select:text;-moz-user-select:text;user-select:text}</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card-main">
+    <div class="header">
+      <div class="chapter-tag">IOBSP Niveau 2 · Bloc 2 — Journée 3 <span>/</span> Module 2</div>
+      <h1>QCM du module 2 — Les formes de crédit et les crédits de trésorerie</h1>
+      <p>25 questions · 18 à choix + 7 rédigées (format examen) · environ 40 min</p>
+      <hr class="gold-rule">
+    </div>
+
+    <div id="screen-identity" class="body">
+      <div class="identity">
+        <h2>Avant de commencer</h2>
+        <p class="sub">Renseignez vos informations pour personnaliser votre attestation de réussite.</p>
+        <div class="form-group"><label for="nom">Nom</label><input type="text" id="nom" placeholder="Votre nom de famille" autocomplete="family-name"></div>
+        <div class="form-group"><label for="prenom">Prénom</label><input type="text" id="prenom" placeholder="Votre prénom" autocomplete="given-name"></div>
+        <button class="btn btn-primary" id="btn-start" disabled onclick="startQuiz()">Commencer l'évaluation</button>
+      </div>
+    </div>
+
+    <div id="screen-quiz" style="display:none;">
+      <div class="stagiaire-bar"><span>Stagiaire&nbsp;: <strong id="stagiaire-name"></strong></span><span id="date-quiz"></span></div>
+      <div class="body">
+        <div class="consigne"><b>🎯 QCM du module 2.</b> 25 questions couvrant les <b>cinq formes de crédit</b>. Sauf mention contraire, raisonnez au régime applicable <b>à compter du 20 novembre 2026</b>. Les questions rédigées ne sont pas notées automatiquement : la réponse attendue s'affiche à la validation et votre rédaction est reproduite dans l'attestation, pour relecture par votre formateur. Copier-coller désactivé.</div>
+        <div class="meta">
+          <div class="progress"><div class="track"><div class="fill" id="fill"></div></div><div class="plabel" id="plabel">0 / 25 répondu</div></div>
+          <div class="scorepill">Score&nbsp;: <b id="score">—</b> / 18</div>
+        </div>
+        <div id="qcm"></div>
+        <div class="actions"><button class="btn btn-primary" id="btn-validate" disabled onclick="validateQuiz()">Validation et génération du PDF</button></div>
+      </div>
+    </div>
+
+    <div id="screen-result" style="display:none;">
+      <div class="stagiaire-bar"><span>Stagiaire&nbsp;: <strong id="stagiaire-name-2"></strong></span><span id="date-quiz-2"></span></div>
+      <div class="body">
+        <div class="result-screen">
+          <div class="score-circle" id="score-circle"><div class="sv" id="score-value">0/18</div><div class="sl" id="score-label">questions</div></div>
+          <div class="result-msg" id="result-message"></div>
+          <div id="pass-banner" style="display:none;"></div>
+          <div class="result-detail" id="result-detail"></div>
+          <div class="recap" id="recap-block"><h4>Bilan par thème</h4><div id="recap-list"></div></div>
+          <div class="note" id="note-pdf" style="display:none;"></div>
+          <div class="actions">
+            <button class="btn btn-secondary" id="btn-restart" onclick="restartQuiz()">↻ Refaire l'évaluation</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A</footer>
+  </div>
+</div>
+
+<script>
+const CFG = {"THEME_INFO": {"A": {"label": "Prêt personnel et crédit affecté"}, "B": {"label": "Le crédit renouvelable"}, "C": {"label": "La location avec option d'achat"}, "D": {"label": "Les crédits de trésorerie"}, "E": {"label": "Choisir la bonne forme"}}, "THEME_ORDER": ["A", "B", "C", "D", "E"], "QUESTIONS": [{"th": "A", "kind": "qcm", "ask": "Une cliente veut 6 000 € « pour faire face à plusieurs dépenses de l'année », sans préciser lesquelles. Quelle caractéristique du prêt personnel répond à cette demande ?", "options": ["Le financement d'un bien désigné au contrat", "La reconstitution de la réserve au fil des remboursements", "La liberté d'emploi des fonds, sans lien avec un autre contrat", "La propriété du bien acquise en fin de contrat"], "correct": [2], "multi": false, "expl": "Le prêt personnel est un crédit non affecté : les fonds sont libres d'emploi, sans justificatif d'usage, et le contrat n'est rattaché à aucune autre convention.", "ref": "art. L. 312-1 et s. C. consom."}, {"th": "A", "kind": "qcm", "ask": "Un client a financé un canapé par crédit affecté. Le magasin ne l'a toujours pas livré. Que peut-on lui dire ? (plusieurs réponses)", "options": ["Ses obligations de remboursement ne courent qu'à compter de la livraison", "Si la vente est résolue, le crédit l'est aussi de plein droit", "Il peut demander en justice la suspension du crédit en cas d'inexécution du vendeur", "Le prêteur devra réparer lui-même le canapé s'il est défectueux"], "correct": [0, 1, 2], "multi": true, "expl": "Ce sont les effets de l'interdépendance du crédit affecté. Le prêteur n'est pas le vendeur : il ne répond pas des défauts du bien.", "ref": "art. L. 312-48 à L. 312-56 C. consom."}, {"th": "A", "kind": "qcm", "ask": "Un client a financé ses cours de conduite par un prêt personnel. L'auto-école ferme définitivement avant la fin de la formation. Sur le crédit, que se passe-t-il ?", "options": ["Le crédit continue : le prêt personnel n'est rattaché à aucun contrat", "Le crédit est résolu de plein droit", "Les échéances sont suspendues automatiquement", "Le prêteur rembourse les leçons non suivies"], "correct": [0], "multi": false, "expl": "Sans rattachement à un contrat principal, la défaillance du prestataire est sans effet sur le crédit. La même formation financée par crédit affecté aurait ouvert droit à la résolution du crédit.", "ref": "art. L. 312-44 et s. C. consom., a contrario"}, {"th": "A", "kind": "open", "ask": "Une cliente veut financer chez un cuisiniste l'installation d'une cuisine de 9 500 €, sur devis signé. Le cuisiniste lui propose un prêt personnel « plus simple ». Que lui conseillez-vous, et pourquoi ?", "model": "Je lui conseille un crédit affecté. L'opération finance une prestation déterminée auprès d'un professionnel identifié, ce qui est l'objet même du crédit affecté, et cette forme lie juridiquement le crédit au contrat de vente et d'installation. Ses obligations de remboursement ne commenceront qu'à l'exécution de la prestation ; si le contrat avec le cuisiniste est annulé ou résolu, le crédit tombera de plein droit ; en cas d'inexécution, elle pourra demander la suspension du crédit. Avec un prêt personnel, elle resterait tenue de rembourser même si la cuisine n'était jamais installée. C'est cette différence qu'il faut lui expliquer, au titre des explications adéquates.", "points": ["Crédit affecté : prestation déterminée, professionnel identifié", "Obligations différées à l'exécution de la prestation", "Résolution de plein droit si le contrat principal tombe", "Risque du prêt personnel : remboursement même sans installation", "Rattachement aux explications adéquates"], "expl": "", "ref": "art. L. 312-44 et s. C. consom.", "minlen": 130}, {"th": "A", "kind": "open", "ask": "Expliquez ce qui se passe lorsqu'un emprunteur exerce son droit de rétractation sur un crédit affecté, et à partir de quand ses obligations auraient commencé s'il ne s'était pas rétracté.", "model": "L'exercice du droit de rétractation sur le crédit affecté emporte résolution de plein droit du contrat de vente : les deux contrats vivent et meurent ensemble, et l'emprunteur ne se retrouve pas engagé sur un achat qu'il n'a plus les moyens de financer. S'il ne s'était pas rétracté, ses obligations n'auraient pris effet qu'à compter de la livraison du bien ou de la fourniture de la prestation — ni à la signature de l'offre, ni à l'expiration du délai de rétractation, ni au déblocage des fonds.", "points": ["Rétractation sur le crédit → résolution de plein droit de la vente", "Les deux contrats sont liés", "Point de départ des obligations : la livraison", "Ni la signature, ni l'expiration du délai, ni le déblocage"], "expl": "", "ref": "art. L. 312-48 et L. 312-52 C. consom.", "minlen": 110}, {"th": "B", "kind": "qcm", "ask": "Mme Lenoir a utilisé la totalité de sa réserve renouvelable de 1 800 €. Quel est le délai maximal de remboursement du capital utilisé ?", "options": ["24 mois", "60 mois", "48 mois", "36 mois"], "correct": [3], "multi": false, "expl": "Pour un crédit renouvelable dont le montant total ne dépasse pas 3 000 €, le capital utilisé doit être remboursé dans un délai maximal de 36 mois.", "ref": "art. D. 312-21 et s. C. consom."}, {"th": "B", "kind": "qcm", "ask": "M. Faure dispose d'une réserve renouvelable de 7 500 €, entièrement utilisée. Quel est le délai maximal de remboursement ?", "options": ["60 mois", "48 mois", "36 mois", "84 mois"], "correct": [0], "multi": false, "expl": "Au-delà de 3 000 €, le délai maximal est de 60 mois. Le couple à retenir : jusqu'à 3 000 €, trois ans ; au-delà, cinq ans.", "ref": "art. D. 312-21 et s. C. consom."}, {"th": "B", "kind": "qcm", "ask": "Pour quelle durée le contrat de crédit renouvelable est-il conclu, et que doit faire le prêteur chaque année ? (plusieurs réponses)", "options": ["Le contrat est conclu pour un an, reconductible", "Le prêteur consulte le fichier national des incidents de remboursement des crédits aux particuliers", "Le prêteur informe l'emprunteur des conditions de reconduction, en temps utile pour qu'il puisse s'y opposer", "Le prêteur recueille l'accord écrit exprès de l'emprunteur, à défaut duquel le contrat est résilié"], "correct": [0, 1, 2], "multi": true, "expl": "Contrat d'un an reconductible, consultation annuelle du FICP et information en temps utile. Le prêteur n'a pas à recueillir un accord exprès : c'est à l'emprunteur de s'opposer s'il le souhaite.", "ref": "art. L. 312-65 et L. 312-70 et s. C. consom."}, {"th": "B", "kind": "qcm", "ask": "Un crédit renouvelable est proposé en magasin pour financer un achat de 1 800 €. Quelle obligation s'impose ?", "options": ["Aucune en dessous de 3 000 €", "Proposer uniquement un crédit affecté", "Accompagner l'offre d'une proposition de crédit amortissable permettant une comparaison claire", "Obtenir l'accord préalable du prêteur"], "correct": [2], "multi": false, "expl": "Au-delà du seuil de 1 000 €, sur le lieu de vente ou à distance, l'offre de renouvelable doit être accompagnée d'une proposition de crédit amortissable, comparable sur au moins deux hypothèses de délai de remboursement.", "ref": "art. L. 312-62 C. consom."}, {"th": "B", "kind": "qcm", "ask": "Une enseigne propose une carte de fidélité adossée à un crédit renouvelable : les remises ne sont accordées que si le client paie « en crédit ». Que relevez-vous ? (plusieurs réponses)", "options": ["Les avantages ne peuvent pas être subordonnés à l'utilisation du crédit", "La carte doit porter de façon visible la mention « carte de crédit »", "La pratique est licite si le client a signé", "La carte doit être renouvelée tous les six mois"], "correct": [0, 1], "multi": true, "expl": "Les avantages commerciaux attachés à la carte ne peuvent pas dépendre de l'utilisation du crédit, et la mention « carte de crédit » doit être visible. La signature du client ne rend pas la pratique licite.", "ref": "art. L. 312-67 et L. 312-68 C. consom."}, {"th": "B", "kind": "open", "ask": "Une cliente rembourse 45 € par mois sur une réserve renouvelable de 3 500 € entièrement utilisée et vous dit : « Tant que je paie les intérêts, tout va bien. » Que lui expliquez-vous ?", "model": "Ce n'est pas possible, et ce n'est pas dans son intérêt. Chaque échéance d'un crédit renouvelable doit comprendre un remboursement minimal du capital utilisé, de sorte que le crédit soit soldé dans un délai maximal : sa réserve dépassant 3 000 €, ce délai est de 60 mois. Payer seulement les intérêts ferait durer la dette indéfiniment, ce que la réglementation interdit depuis la loi Lagarde. Si la mensualité correspondante pèse trop sur son budget, c'est peut-être que la forme de crédit n'est pas adaptée : on peut alors étudier un crédit amortissable.", "points": ["Remboursement minimal du capital à chaque échéance", "60 mois au-delà de 3 000 €", "Ne payer que les intérêts est impossible", "Orientation vers une forme plus adaptée si la charge est trop lourde"], "expl": "", "ref": "art. L. 312-66 et D. 312-21 et s. C. consom.", "minlen": 130}, {"th": "C", "kind": "qcm", "ask": "Deux contrats portent sur le même véhicule, même durée et mêmes loyers. Le premier permet de l'acheter en fin de contrat, le second non. Qu'est-ce qui les distingue juridiquement ?", "options": ["Rien, ce sont deux locations", "Le premier est une LOA, assimilée à un crédit à la consommation ; le second une location simple", "Le second est un crédit affecté", "Le premier est un crédit renouvelable"], "correct": [1], "multi": false, "expl": "L'existence d'une option d'achat est le critère unique. Avec option, il y a financement : c'est une LOA, assimilée à un crédit à la consommation. Sans option, c'est une location simple, hors du champ.", "ref": "art. L. 312-1 C. consom."}, {"th": "C", "kind": "qcm", "ask": "Une entreprise loue à un particulier un camping-car pour 36 mois, sans aucune faculté de l'acquérir. Le loueur doit-il remettre une FIPEN ?", "options": ["Oui, la durée dépassant trois mois", "Oui, depuis la réforme toutes les locations sont des crédits", "Non, faute d'option d'achat, il ne s'agit pas d'un crédit", "Oui, si le total des loyers dépasse 10 000 €"], "correct": [2], "multi": false, "expl": "Sans option d'achat, il n'y a pas de financement mais une simple location : le régime du crédit à la consommation ne s'applique pas. La réforme intègre pleinement la LOA, pas la location simple.", "ref": "art. L. 312-1 et L. 312-4 C. consom."}, {"th": "C", "kind": "qcm", "ask": "Une LOA propose : 3 000 € de premier versement, 36 loyers de 249 €, valeur de rachat de 6 500 €. Quel est le coût total si le client lève l'option ?", "options": ["11 964 €", "14 964 €", "21 464 €", "18 464 €"], "correct": [3], "multi": false, "expl": "3 000 + (36 × 249 = 8 964) + 6 500 = 18 464 €. La réponse « 11 964 € » est l'erreur classique : elle oublie la valeur de rachat.", "ref": "art. L. 312-14 C. consom."}, {"th": "C", "kind": "open", "ask": "Une cliente hésite entre une LOA à 279 € par mois et un crédit amortissable à 395 € par mois pour la même voiture. Elle penche pour la LOA « parce que c'est moins cher ». Comment l'aidez-vous à comparer ?", "model": "Je lui explique qu'on ne compare pas un loyer et une mensualité : le loyer paie l'usage du véhicule, la mensualité rembourse son achat. Pour comparer, il faut additionner, pour la LOA, le premier versement, la totalité des loyers et la valeur de rachat si elle veut devenir propriétaire, puis mettre ce total en regard du coût total du crédit amortissable et du prix comptant. Il faut aussi envisager l'hypothèse où elle ne lève pas l'option : elle aura payé l'usage sans devenir propriétaire. Ce raisonnement fait partie des explications adéquates qui lui sont dues.", "points": ["Loyer et mensualité ne paient pas la même chose", "Coût total LOA = premier versement + loyers + valeur de rachat", "Comparaison avec le coût total du crédit et le prix comptant", "Hypothèse de l'option non levée", "Rattachement aux explications adéquates"], "expl": "", "ref": "art. L. 312-14 C. consom.", "minlen": 120}, {"th": "D", "kind": "qcm", "ask": "Le compte d'un client présente un solde débiteur de 600 € alors que son autorisation est de 400 €. Comment qualifier les 200 € qui excèdent l'autorisation ?", "options": ["Une facilité de caisse", "Un dépassement", "Un découvert autorisé", "Un crédit renouvelable"], "correct": [1], "multi": false, "expl": "Le dépassement est le solde débiteur qui excède l'autorisation convenue, ou qui apparaît sans aucune autorisation. C'est la pratique que la réforme vise à faire reculer.", "ref": "art. L. 312-93 et s. C. consom."}, {"th": "D", "kind": "qcm", "ask": "Avant le 20 novembre 2026, une banque accordait à un client un découvert de 150 €, sans contrôle particulier. Pourquoi était-ce possible ?", "options": ["Parce que le découvert n'a jamais relevé du crédit à la consommation", "Parce que le client était titulaire d'un compte depuis longtemps", "Parce que les découverts de moins de 200 € ou d'un mois échappaient au régime complet", "Parce que le taux appliqué était inférieur à l'usure"], "correct": [2], "multi": false, "expl": "C'était la « zone grise » : en dessous de 200 € ou d'un mois, le découvert échappait au régime complet. Ces seuils disparaissent au 20 novembre 2026.", "ref": "régime antérieur à l'ord. n° 2025-880"}, {"th": "D", "kind": "qcm", "ask": "Depuis la réforme, un client demande une autorisation de découvert de 80 € pour dix jours. Comment l'établissement doit-il apprécier sa solvabilité ?", "options": ["Il n'a rien à vérifier pour un montant si faible", "Sur simple déclaration du client", "Avec le même dossier qu'un prêt de 15 000 €", "De façon proportionnée au montant et à la durée"], "correct": [3], "multi": false, "expl": "L'évaluation de la solvabilité est proportionnée : allégée pour quelques dizaines d'euros sur quelques jours, complète pour un crédit classique. Proportionnée ne veut dire ni absente, ni identique.", "ref": "ord. n° 2025-880 du 3 septembre 2025"}, {"th": "D", "kind": "qcm", "ask": "Lors d'une réunion d'équipe, quatre affirmations circulent sur la réforme des découverts. Lesquelles sont exactes ? (plusieurs réponses)", "options": ["Le découvert repose, comme avant, sur l'accord de l'établissement", "L'autorisation de découvert doit désormais être formalisée", "Le découvert bancaire est supprimé le 20 novembre 2026", "Les petits découverts de moins de 200 € restent hors du régime"], "correct": [0, 1], "multi": true, "expl": "La réforme ne supprime pas le découvert : elle le documente. Il reste une faculté accordée par l'établissement, et son autorisation doit être formalisée. Les seuils de 200 € et d'un mois disparaissent précisément le 20 novembre 2026.", "ref": "ord. n° 2025-880 du 3 septembre 2025"}, {"th": "D", "kind": "qcm", "ask": "Une cliente bénéficie depuis 2024 d'une autorisation de découvert, à durée indéterminée. Elle vous demande si la réforme la concerne. Que lui répondez-vous ?", "options": ["Non, son autorisation est entièrement soumise au droit antérieur", "En principe le droit antérieur s'applique, mais certaines règles nouvelles visent aussi les crédits à durée indéterminée en cours", "Oui, son autorisation bascule entièrement sous le nouveau régime", "Son autorisation prend fin le 20 novembre 2026"], "correct": [1], "multi": false, "expl": "Le découvert est un crédit à durée indéterminée : le principe de cohabitation des régimes joue, mais certaines règles nouvelles s'appliquent malgré tout aux contrats en cours. On ne dit pas à un client que son découvert est à l'abri de tout.", "ref": "ord. n° 2025-880, dispositions transitoires"}, {"th": "D", "kind": "open", "ask": "Un client inquiet vous écrit : « Mon conseiller m'a dit qu'à partir de novembre, mon découvert de 300 € ne serait plus toléré. » Rédigez une réponse exacte et rassurante.", "model": "Votre découvert n'est pas supprimé. Il a toujours reposé sur l'accord de votre banque, et il continue d'exister. Ce qui change depuis le 20 novembre 2026, c'est que tous les découverts autorisés des particuliers relèvent du régime du crédit à la consommation, quel que soit leur montant : l'autorisation doit être formalisée, vous recevez une information précontractuelle et votre solvabilité est appréciée de façon proportionnée. Ce qui recule, c'est le dépassement toléré durablement sans autorisation écrite. Si vous avez besoin de ce découvert, demandez sa formalisation à votre banque.", "points": ["Le découvert n'est pas supprimé et reste soumis à l'accord de la banque", "Tous les découverts autorisés relèvent du régime depuis le 20/11/2026", "Formalisation, information précontractuelle, solvabilité proportionnée", "Ce qui recule : le dépassement toléré sans écrit", "Conseil pratique : demander la formalisation"], "expl": "", "ref": "ord. n° 2025-880 du 3 septembre 2025", "minlen": 130}, {"th": "E", "kind": "qcm", "ask": "Un couple veut financer 8 000 € de panneaux solaires posés par un installateur choisi, bon de commande signé. Quelle forme de crédit lui proposez-vous ?", "options": ["Un prêt personnel", "Une facilité de caisse", "Un crédit renouvelable", "Un crédit affecté à l'installation"], "correct": [3], "multi": false, "expl": "Prestation déterminée et professionnel identifié : le crédit affecté lie le sort du crédit à celui du contrat. Si l'installateur fait défaut, le crédit suit le contrat.", "ref": "art. L. 312-44 et s. C. consom."}, {"th": "E", "kind": "qcm", "ask": "Un client est débiteur toute l'année, au plafond de son autorisation de découvert. Que faites-vous ?", "options": ["Aucune de ces formes : sa situation doit être examinée", "Vous ouvrez un crédit renouvelable pour lui donner de l'air", "Vous augmentez l'autorisation", "Vous basculez sur une facilité de caisse"], "correct": [0], "multi": false, "expl": "Ce n'est plus un décalage de trésorerie mais un besoin de financement durable, et probablement le signe d'un déséquilibre. Augmenter l'autorisation ou ouvrir une réserve déplacerait le problème — et engagerait votre devoir de mise en garde.", "ref": "art. L. 312-14 C. consom. et devoir de mise en garde"}, {"th": "E", "kind": "open", "ask": "Décrivez la méthode que vous suivez pour choisir la forme de crédit adaptée, et expliquez pourquoi l'ordre des questions importe.", "model": "Je pars du besoin exprimé par le client, jamais du produit. Première question : le crédit finance-t-il un achat déterminé ? Si oui, le crédit affecté s'impose, car il est le seul à lier le sort du crédit à celui de l'achat. Deuxième question : le besoin est-il ponctuel et chiffré, ou récurrent et imprécis ? Un besoin ponctuel appelle un prêt personnel, avec montant, durée et échéance connus d'avance ; un besoin récurrent oriente vers une réserve, dont il faut mesurer le coût. Troisième question : le client veut-il la propriété ou l'usage ? L'usage peut justifier une location avec option d'achat, à condition de présenter le coût total et non le seul loyer. Quatrième question : s'agit-il d'un décalage de trésorerie de quelques jours ou d'un besoin de financement ? Un décalage se traite par un découvert formalisé ; un besoin durable ne se traite jamais par du découvert. L'ordre importe parce que la première question est celle qui protège le client : l'omettre, c'est le priver de l'interdépendance sans qu'il le sache.", "points": ["Partir du besoin, jamais du produit", "1. Achat déterminé → crédit affecté", "2. Besoin ponctuel → prêt personnel ; récurrent → réserve, coût à mesurer", "3. Usage → LOA avec coût total ; propriété → affecté", "4. Décalage → découvert formalisé ; besoin durable → jamais du découvert", "L'ordre importe : la première question est celle qui protège"], "expl": "", "ref": "art. L. 312-14 C. consom.", "minlen": 140}, {"th": "E", "kind": "open", "ask": "Quel risque prend l'intermédiaire qui part du produit plutôt que du besoin ? Rattachez votre réponse aux obligations vues au module 1.", "model": "Partir du produit consiste à proposer la forme la plus rémunératrice ou la plus rapide à mettre en place, puis à habiller le besoin pour qu'il y corresponde. Le risque est double. Sur le terrain de l'information, cela contrevient à l'obligation d'explications adéquates, qui impose de permettre à l'emprunteur de déterminer si le crédit et les services accessoires sont adaptés à ses besoins et à sa situation financière. Sur le terrain du risque, cela expose au devoir de mise en garde lorsque l'opération est inadaptée à la situation de l'emprunteur, alerte qui doit être tracée. Et si l'intermédiaire s'est présenté comme conseillant, il relève en outre du régime du service de conseil, avec sa recommandation personnalisée écrite.", "points": ["Définition du travers : partir du produit et habiller le besoin", "Contrariété avec l'obligation d'explications adéquates", "Exposition au devoir de mise en garde, alerte tracée", "Régime du conseil si l'intermédiaire s'est présenté comme conseillant"], "expl": "", "ref": "art. L. 312-14 et L. 312-15-1 et s. C. consom.", "minlen": 110}], "HAS_THEMES": true, "PASS": 70, "PASS_OK": "Module 2 validé. Téléchargez l'attestation et déposez-la dans l'activité 360Learning.", "PASS_KO": "Le seuil de 70 % n'est pas atteint. Reprenez les capsules sur les thèmes signalés dans le bilan, refaites les points d'étape correspondants, puis repassez ce QCM. Déposez malgré tout votre attestation : votre formateur verra où vous accrochez.", "PDF": {"header": "TMK PERFORMANCES · IOBSP NIVEAU 2 — BLOC 2 · JOURNÉE 3 · MODULE 2", "att_title": "Attestation — QCM du module 2", "att_sub": "Les formes de crédit et les crédits de trésorerie", "footer": "TMK Performances - N° Siret : 49841924100027 - Code NAF : 8559A", "fname": "Attestation_J3_M2"}};
+const THEME_INFO = CFG.THEME_INFO, THEME_ORDER = CFG.THEME_ORDER;
+const QUESTIONS = CFG.QUESTIONS, TOTAL = QUESTIONS.length, HAS_THEMES = CFG.HAS_THEMES;
+const IS_OPEN = (c)=>c.kind==="open";
+const QCM_N = QUESTIONS.filter(c=>!IS_OPEN(c)).length;
+const OPEN_N = TOTAL - QCM_N;
+const PASS = CFG.PASS, PASS_OK = CFG.PASS_OK, PASS_KO = CFG.PASS_KO;
+const PDF = CFG.PDF;
+
+const state = { nom:"", prenom:"", answers:{}, validated:false, score:0, pdfGenerated:false, dateQuiz:null };
+
+document.getElementById("nom").addEventListener("input", checkIdentity);
+document.getElementById("prenom").addEventListener("input", checkIdentity);
+function checkIdentity(){const n=document.getElementById("nom").value.trim(),p=document.getElementById("prenom").value.trim();document.getElementById("btn-start").disabled=!(n&&p);}
+
+function startQuiz(){
+  state.nom=document.getElementById("nom").value.trim().toUpperCase();
+  let p=document.getElementById("prenom").value.trim();
+  state.prenom=p.charAt(0).toUpperCase()+p.slice(1).toLowerCase();
+  state.dateQuiz=new Date();
+  const full=state.prenom+" "+state.nom;
+  document.getElementById("stagiaire-name").textContent=full;
+  document.getElementById("stagiaire-name-2").textContent=full;
+  const d=state.dateQuiz.toLocaleDateString("fr-FR",{day:"2-digit",month:"long",year:"numeric"});
+  document.getElementById("date-quiz").textContent=d; document.getElementById("date-quiz-2").textContent=d;
+  document.getElementById("screen-identity").style.display="none";
+  document.getElementById("screen-quiz").style.display="block";
+  if(!HAS_THEMES) document.getElementById("recap-block").style.display="none";
+  render();
+}
+
+function themeTag(c){
+  if(!c.th || !THEME_INFO[c.th]) return "";
+  return `<span class="theme-tag">${c.th} · ${THEME_INFO[c.th].label}</span>`;
+}
+
+function render(){
+  const qcm=document.getElementById("qcm"); qcm.innerHTML="";
+  QUESTIONS.forEach((c,i)=>{
+    const tag=themeTag(c);
+    let control;
+    if(IS_OPEN(c)){
+      const prev=state.answers[i]||"";
+      control=`<div class="open-tag">Question ouverte</div><textarea class="oa" data-q="${i}" rows="4" placeholder="Rédigez votre réponse, comme à l'examen — en phrases complètes.">${prev}</textarea><div class="oa-hint">Réponse attendue : ${c.minlen} caractères minimum. La réponse attendue s'affichera après validation : c'est à vous de confronter la vôtre.</div>`;
+    } else if(c.multi){
+      let boxes="";
+      c.options.forEach((o,oi)=>{boxes+=`<label data-opt="${oi}"><input type="checkbox" data-q="${i}" value="${oi}"><span>${o}</span></label>`;});
+      control=`<div class="multi-tag">Plusieurs réponses</div><div class="checks" data-q="${i}">${boxes}</div>`;
+    } else {
+      let opts='<option value="">— choisir une réponse —</option>';
+      c.options.forEach((o,oi)=>opts+=`<option value="${oi}">${o}</option>`);
+      control=`<select class="cs" data-q="${i}">${opts}</select>`;
+    }
+    qcm.innerHTML+=`<div class="cq"><div class="ask"><span class="qn">${i+1}</span><span>${c.ask}${tag}</span></div>${control}<div class="cfb" id="cfb-${i}"></div></div>`;
+  });
+  document.querySelectorAll("select.cs").forEach(s=>s.addEventListener("change",onSelect));
+  document.querySelectorAll(".checks input").forEach(s=>s.addEventListener("change",onCheck));
+  document.querySelectorAll("textarea.oa").forEach(s=>s.addEventListener("input",onOpen));
+  update();
+}
+
+function onSelect(e){ if(state.validated)return; const i=+e.currentTarget.dataset.q,v=e.currentTarget.value; if(v==="") delete state.answers[i]; else state.answers[i]=+v; update(); }
+function onCheck(e){
+  if(state.validated)return; const i=+e.currentTarget.dataset.q;
+  const checked=[...document.querySelectorAll(`.checks input[data-q="${i}"]:checked`)].map(x=>+x.value);
+  if(checked.length===0) delete state.answers[i]; else state.answers[i]=checked.sort((a,b)=>a-b);
+  update();
+}
+
+function onOpen(e){
+  if(state.validated)return; const i=+e.currentTarget.dataset.q, v=e.currentTarget.value.trim();
+  if(v.length < QUESTIONS[i].minlen) delete state.answers[i]; else state.answers[i]=e.currentTarget.value.trim();
+  update();
+}
+
+function update(){
+  const n=Object.keys(state.answers).length;
+  document.getElementById("fill").style.width=(n/TOTAL*100)+"%";
+  document.getElementById("plabel").textContent=n+" / "+TOTAL+" répondu"+(n>1?"es":"");
+  document.getElementById("btn-validate").disabled=(n!==TOTAL);
+}
+
+function isCorrect(c, ans){
+  if(IS_OPEN(c)) return null;          // non notée automatiquement
+  if(ans==null) return false;
+  if(c.multi){
+    const a=[...ans].sort((x,y)=>x-y).join(","), g=[...c.correct].sort((x,y)=>x-y).join(",");
+    return a===g;
+  }
+  return ans===c.correct[0];
+}
+function answerLabel(c, ans){
+  if(ans==null) return "—";
+  if(c.multi) return ans.map(i=>c.options[i]).join(" ; ");
+  return c.options[ans];
+}
+function correctLabel(c){
+  return c.correct.map(i=>c.options[i]).join(" ; ");
+}
+
+function themeStats(){
+  const st={}; THEME_ORDER.forEach(t=>st[t]={ok:0,total:0});
+  QUESTIONS.forEach((c,i)=>{ if(IS_OPEN(c)||!st[c.th])return; st[c.th].total++; if(isCorrect(c,state.answers[i])) st[c.th].ok++; });
+  return st;
+}
+
+function validateQuiz(){
+  if(state.validated)return; state.validated=true;
+  let score=0;
+  QUESTIONS.forEach((c,i)=>{
+    const ans=state.answers[i], ok=isCorrect(c,ans); if(ok)score++;
+    if(IS_OPEN(c)){
+      const ta=document.querySelector(`textarea.oa[data-q="${i}"]`); ta.disabled=true;
+      const pts=(c.points&&c.points.length)?`<ul>${c.points.map(x=>`<li>${x}</li>`).join("")}</ul>`:"";
+      const rf=c.ref?`<p class="ref">${c.ref}</p>`:"";
+      const f0=document.getElementById("cfb-"+i);
+      f0.className="cfb good";
+      f0.innerHTML=`<div class="model"><h5>La réponse attendue</h5><p>${c.model}</p>${pts}${rf}<p class="note">Cette question n'est pas notée automatiquement : confrontez votre rédaction à la réponse attendue. Votre texte et la réponse attendue figurent tous deux dans votre attestation PDF.</p></div>`;
+      requestAnimationFrame(()=>f0.classList.add("show"));
+      return;
+    }
+    if(c.multi){
+      const cont=document.querySelector(`.checks[data-q="${i}"]`);
+      cont.querySelectorAll("input").forEach(x=>x.disabled=true);
+      c.correct.forEach(g=>cont.querySelector(`label[data-opt="${g}"]`).classList.add("ok"));
+      (ans||[]).forEach(a=>{ if(!c.correct.includes(a)) cont.querySelector(`label[data-opt="${a}"]`).classList.add("ko"); });
+    } else {
+      const sel=document.querySelector(`select.cs[data-q="${i}"]`); sel.disabled=true;
+      sel.classList.add(ok?"ok":"ko");
+    }
+    const f=document.getElementById("cfb-"+i);
+    f.className="cfb "+(ok?"good":"bad");
+    const vd=ok?"Exact.":((c.multi?"Bonnes réponses : ":"Bonne réponse : ")+correctLabel(c)+".");
+    const refLine=c.ref?`<br><span class="ref">${c.ref}</span>`:"";
+    f.innerHTML=`<span class="vd">${vd}</span> ${c.expl}${refLine}`;
+    requestAnimationFrame(()=>f.classList.add("show"));
+  });
+  state.score=score;
+  document.getElementById("score").textContent=score;
+  document.getElementById("btn-validate").disabled=true;
+  generatePDF();
+  showResults();
+}
+
+function showResults(){
+  const pct=Math.round(state.score/QCM_N*100);
+  document.getElementById("screen-result").style.display="block";
+  document.getElementById("score-value").textContent=state.score+"/"+QCM_N;
+  const sl=document.getElementById("score-label"); if(sl) sl.textContent = OPEN_N ? "questions à choix" : "questions";
+  const c=document.getElementById("score-circle"),m=document.getElementById("result-message"),d=document.getElementById("result-detail");
+  const suffix = OPEN_N ? " Vos "+OPEN_N+" question"+(OPEN_N>1?"s":"")+" ouverte"+(OPEN_N>1?"s ne sont":" n'est")+" pas notée"+(OPEN_N>1?"s":"")+" : confrontez votre rédaction à la réponse attendue, affichée sous chacune." : "";
+  c.className="score-circle";
+  if(PASS){
+    const ok = pct>=PASS;
+    c.classList.add(ok?(pct>=90?"excellent":"good"):(pct>=50?"average":"poor"));
+    m.textContent = ok ? "Objectif atteint" : "Objectif non atteint";
+    d.textContent = (ok?"Vous êtes au-dessus du seuil de "+PASS+" %.":"Vous êtes en dessous du seuil de "+PASS+" %.")+suffix;
+    const b=document.getElementById("pass-banner");
+    b.className="pass-banner "+(ok?"ok":"ko");
+    b.innerHTML = ok
+      ? `<b>Réussite — ${pct} % de bonnes réponses</b>${PASS_OK||"Vous avez atteint le seuil de "+PASS+" %. Les acquis de la journée sont consolidés : vous pouvez aborder la suite du parcours."}`
+      : `<b>Seuil non atteint — ${pct} % de bonnes réponses</b>${PASS_KO||"Le seuil de réussite est fixé à "+PASS+" %. Reprenez les fiches mémo et les séquences des thèmes en rouge, puis <strong>refaites ce QCM afin de vous entraîner</strong> : c'est en le repassant que les automatismes s'installent."}`;
+    b.style.display="block";
+  }
+  else if(pct>=90){c.classList.add("excellent");m.textContent="Évaluation validée — Excellent !";d.textContent="Vous maîtrisez l'ensemble des notions du module."+suffix;}
+  else if(pct>=70){c.classList.add("good");m.textContent="Évaluation validée";d.textContent="Bon niveau global. Le détail commenté de vos réponses figure ci-dessus."+suffix;}
+  else if(pct>=50){c.classList.add("average");m.textContent="Presque — à consolider";d.textContent="Acquis partiels. Le détail commenté de chaque réponse figure ci-dessus."+suffix;}
+  else{c.classList.add("poor");m.textContent="À retravailler";d.textContent="Le détail commenté reprend la bonne réponse et l'explication de chaque question."+suffix;}
+
+  if(HAS_THEMES){
+    const st=themeStats(); let html="";
+    THEME_ORDER.forEach(t=>{
+      const s=st[t]; if(!s||s.total===0) return;
+      const full=(s.ok===s.total);
+      const color=full?"var(--ok)":(s.ok===0?"var(--ko)":"var(--amber)");
+      html+=`<div class="recap-row"><span class="dot" style="background:${color}"></span><span class="lab">${t} · ${THEME_INFO[t].label}</span><span class="sc">${s.ok} / ${s.total}</span></div>`;
+    });
+    document.getElementById("recap-list").innerHTML=html;
+  }
+  const np=document.getElementById("note-pdf");
+  if(state.pdfGenerated){np.textContent="✓ Votre attestation PDF a été générée et téléchargée pour cette session. Vous pouvez refaire l'évaluation, mais aucun nouveau PDF ne sera généré.";np.style.display="block";}
+  document.getElementById("screen-result").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function restartQuiz(){
+  state.answers={};state.validated=false;state.score=0;state.dateQuiz=new Date();
+  const d=state.dateQuiz.toLocaleDateString("fr-FR",{day:"2-digit",month:"long",year:"numeric"});
+  document.getElementById("date-quiz").textContent=d;document.getElementById("date-quiz-2").textContent=d;
+  document.getElementById("score").textContent="—";
+  const bv=document.getElementById("btn-validate");
+  if(state.pdfGenerated) bv.textContent="Valider l'évaluation";
+  document.getElementById("note-pdf").style.display="none";
+  const pb=document.getElementById("pass-banner"); if(pb) pb.style.display="none";
+  document.getElementById("screen-result").style.display="none";
+  render(); window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ───────── PDF (attestation) ───────── */
+function generatePDF(){
+  if(state.pdfGenerated)return;
+  if(!window.jspdf||!window.jspdf.jsPDF){return;}
+  const { jsPDF }=window.jspdf;
+  const doc=new jsPDF({unit:"mm",format:"a4"});
+  const pageW=doc.internal.pageSize.getWidth(), pageH=doc.internal.pageSize.getHeight();
+  const margin=18; let y=0;
+  const NAVY=[22,36,59],BLUE=[31,78,121],OKC=[47,122,79],KOC=[178,59,59],AMB=[181,133,42];
+  const footer=()=>{const tp=doc.internal.getNumberOfPages();for(let i=1;i<=tp;i++){doc.setPage(i);doc.setFont("helvetica","italic");doc.setFontSize(8);doc.setTextColor(150,150,150);doc.text(`Page ${i} / ${tp}  —  ${PDF.footer}`,pageW/2,pageH-8,{align:"center"});}};
+  const ensure=(h)=>{if(y+h>pageH-18){doc.addPage();y=margin;}};
+
+  doc.setFillColor(...NAVY);doc.rect(0,0,pageW,38,"F");
+  doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(9);
+  doc.text(PDF.header,margin,13);
+  doc.setFontSize(15);doc.text(PDF.att_title,margin,24);
+  doc.setFont("helvetica","normal");doc.setFontSize(10);
+  doc.text(PDF.att_sub,margin,32);
+  y=50;
+
+  doc.setFillColor(239,234,223);doc.rect(margin,y,pageW-2*margin,26,"F");
+  doc.setTextColor(...BLUE);doc.setFont("helvetica","bold");doc.setFontSize(11);doc.text("Stagiaire",margin+4,y+7);
+  doc.setFont("helvetica","normal");doc.setTextColor(40,40,40);doc.setFontSize(12);doc.text(`${state.prenom} ${state.nom}`,margin+4,y+15);
+  doc.setFontSize(9);doc.setTextColor(100,100,100);
+  const dS=state.dateQuiz.toLocaleDateString("fr-FR",{day:"2-digit",month:"long",year:"numeric"});
+  const tS=state.dateQuiz.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"});
+  doc.text(`Évaluation réalisée le ${dS} à ${tS}`,margin+4,y+22);
+  y+=36;
+
+  const pct=Math.round(state.score/QCM_N*100);
+  let col=KOC,lab="À retravailler";
+  if(PASS){ const ok=pct>=PASS; col=ok?OKC:AMB; lab=ok?"Réussite":"Seuil non atteint"; }
+  else if(pct>=90){col=OKC;lab="Excellent";}else if(pct>=70){col=BLUE;lab="Validé";}else if(pct>=50){col=AMB;lab="À consolider";}
+  doc.setFillColor(...col);doc.rect(margin,y,pageW-2*margin,28,"F");
+  doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(22);doc.text(`${state.score} / ${QCM_N}`,margin+6,y+13);
+  doc.setFontSize(11);doc.text(`(${pct}%)  —  questions à choix`,margin+6,y+22);
+  doc.setFontSize(13);doc.text(lab,pageW-margin-6,y+17,{align:"right"});
+  y+=34;
+
+  if(PASS){
+    const ok=pct>=PASS;
+    const msg = ok ? `Seuil de reussite : ${PASS} %. Objectif atteint.`
+                   : `Seuil de reussite : ${PASS} %. Objectif non atteint : refaites ce QCM afin de vous entrainer.`;
+    doc.setFont("helvetica","italic");doc.setFontSize(9);doc.setTextColor(...(ok?OKC:AMB));
+    doc.text(msg,margin,y+2); y+=8;
+  }
+  if(OPEN_N){
+    doc.setFont("helvetica","italic");doc.setFontSize(8.5);doc.setTextColor(120,120,120);
+    doc.text(`${OPEN_N} question(s) ouverte(s) : non notees automatiquement — voir la section dediee en fin de document.`,margin,y+2);
+    y+=8;
+  }
+  y+=2;
+
+  if(HAS_THEMES){
+    const st=themeStats();
+    doc.setFillColor(...NAVY);doc.rect(margin,y,pageW-2*margin,9,"F");
+    doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(11);doc.text("Bilan par thème",margin+4,y+6.2);y+=12;
+    THEME_ORDER.forEach(t=>{
+      const s=st[t]; if(!s||s.total===0) return;
+      const full=(s.ok===s.total); const cc=full?OKC:(s.ok===0?KOC:AMB);
+      ensure(7);
+      doc.setFillColor(...cc);doc.circle(margin+3,y-0.5,1.4,"F");
+      doc.setFont("helvetica","normal");doc.setFontSize(9.5);doc.setTextColor(55,55,55);
+      doc.text(`${t} · ${THEME_INFO[t].label}`,margin+8,y);
+      doc.setFont("helvetica","bold");doc.text(`${s.ok} / ${s.total}`,margin+92,y);
+      y+=6.5;
+    });
+    y+=4;
+  }
+
+  doc.setFillColor(...NAVY);doc.rect(margin,y,pageW-2*margin,9,"F");
+  doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(11);doc.text("Détail des réponses",margin+4,y+6.2);
+  doc.setFontSize(9);doc.text(`${QCM_N} question${QCM_N>1?"s":""} à choix`,pageW-margin-4,y+6.2,{align:"right"});y+=12;
+
+  QUESTIONS.forEach((c,i)=>{
+    if(IS_OPEN(c)) return;
+    const ans=state.answers[i], ok=isCorrect(c,ans);
+    const head=(c.th?`[${c.th}] `:"")+c.ask;
+    const qLines=doc.splitTextToSize(`${i+1}. ${head}`,pageW-2*margin-16);
+    const yLines=doc.splitTextToSize(`Votre réponse : ${answerLabel(c,ans)}`,pageW-2*margin-10);
+    const gLines=doc.splitTextToSize(`${c.multi?"Bonnes réponses":"Bonne réponse"} : ${correctLabel(c)}`,pageW-2*margin-10);
+    const eLines=doc.splitTextToSize(c.expl+(c.ref?"  ("+c.ref+")":""),pageW-2*margin-10);
+    const h=6+qLines.length*4+4+yLines.length*4+gLines.length*4+4+eLines.length*4+6;
+    ensure(h);
+    doc.setFillColor(ok?OKC[0]:KOC[0],ok?OKC[1]:KOC[1],ok?OKC[2]:KOC[2]);doc.rect(margin,y,2,h-3,"F");
+    doc.setFont("helvetica","bold");doc.setFontSize(9.5);doc.setTextColor(ok?OKC[0]:KOC[0],ok?OKC[1]:KOC[1],ok?OKC[2]:KOC[2]);doc.text(ok?"[OK]":"[X]",margin+5,y+5);
+    doc.setTextColor(55,55,55);doc.text(qLines,margin+16,y+5);
+    let yy=y+5+qLines.length*4+2;
+    doc.setFont("helvetica","bold");doc.setFontSize(8.5);doc.setTextColor(100,100,100);doc.text(yLines,margin+5,yy);yy+=yLines.length*4;
+    doc.setTextColor(40,100,60);doc.text(gLines,margin+5,yy);yy+=gLines.length*4+1;
+    doc.setFont("helvetica","italic");doc.setFontSize(8.5);doc.setTextColor(90,90,90);doc.text(eLines,margin+5,yy);
+    y+=h;
+  });
+
+  if(OPEN_N){
+    ensure(20);
+    doc.setFillColor(...NAVY);doc.rect(margin,y,pageW-2*margin,9,"F");
+    doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");doc.setFontSize(11);doc.text("Questions ouvertes — votre rédaction et la réponse attendue",margin+4,y+6.2);
+    doc.setFontSize(9);doc.text(`${OPEN_N} question${OPEN_N>1?"s":""}`,pageW-margin-4,y+6.2,{align:"right"});y+=12;
+    doc.setFont("helvetica","italic");doc.setFontSize(8.5);doc.setTextColor(120,120,120);
+    const iL=doc.splitTextToSize("Ces questions ne sont pas notees automatiquement : aucune correction de texte libre ne serait fiable. Confrontez votre redaction a la reponse attendue, et sollicitez votre referent pedagogique en cas de doute.",pageW-2*margin);
+    doc.text(iL,margin,y); y+=iL.length*4+4;
+
+    let n=0;
+    QUESTIONS.forEach((c,i)=>{
+      if(!IS_OPEN(c)) return; n++;
+      const mine=(state.answers[i]||"— non renseignée —");
+      const qLines=doc.splitTextToSize(`${n}. ${(c.th?`[${c.th}] `:"")+c.ask}`,pageW-2*margin-10);
+      const aLines=doc.splitTextToSize(mine,pageW-2*margin-14);
+      const mLines=doc.splitTextToSize(c.model,pageW-2*margin-14);
+      const pLines=(c.points||[]).map(x=>doc.splitTextToSize("- "+x,pageW-2*margin-16)).flat();
+      const h=6+qLines.length*4+6+aLines.length*4+6+mLines.length*4+pLines.length*4+(c.ref?5:0)+8;
+      ensure(Math.min(h,pageH-2*margin));
+      doc.setFillColor(...BLUE);doc.rect(margin,y,2,Math.min(h-3,pageH-y-20),"F");
+      doc.setFont("helvetica","bold");doc.setFontSize(9.5);doc.setTextColor(55,55,55);
+      doc.text(qLines,margin+6,y+5); let yy=y+5+qLines.length*4+3;
+      doc.setFont("helvetica","bold");doc.setFontSize(8.5);doc.setTextColor(100,100,100);doc.text("Votre reponse :",margin+6,yy);yy+=4;
+      doc.setFont("helvetica","normal");doc.setTextColor(60,60,60);
+      aLines.forEach(l=>{ensure(5);doc.text(l,margin+10,yy);yy+=4;});
+      yy+=3;
+      doc.setFont("helvetica","bold");doc.setTextColor(40,100,60);ensure(5);doc.text("Reponse attendue :",margin+6,yy);yy+=4;
+      doc.setFont("helvetica","normal");doc.setTextColor(60,80,65);
+      mLines.forEach(l=>{ensure(5);doc.text(l,margin+10,yy);yy+=4;});
+      pLines.forEach(l=>{ensure(5);doc.text(l,margin+12,yy);yy+=4;});
+      if(c.ref){doc.setFont("helvetica","italic");doc.setTextColor(150,120,80);ensure(5);doc.text(c.ref,margin+10,yy+1);yy+=5;}
+      y=yy+6;
+    });
+  }
+
+  footer();
+  const safe=(s)=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-zA-Z0-9]/g,"_");
+  const df=state.dateQuiz.toISOString().slice(0,10);
+  doc.save(`${PDF.fname}_${safe(state.nom)}_${safe(state.prenom)}_${df}.pdf`);
+
+  state.pdfGenerated=true;
+}
+</script>
+
+<script>
+(function(){
+  function libre(e){ var t=e.target; return t && (t.tagName==='TEXTAREA'||t.tagName==='INPUT'); }
+  ['copy','cut','contextmenu','dragstart'].forEach(function(ev){
+    document.addEventListener(ev,function(e){ if(!libre(e)) e.preventDefault(); });
+  });
+  document.addEventListener('keydown',function(e){
+    if(libre(e)) return;
+    var k=(e.key||'').toLowerCase();
+    if((e.ctrlKey||e.metaKey) && ['c','x','a','s','p','u'].indexOf(k)>-1) e.preventDefault();
+  });
+})();
+</script>
+</body>
+</html>
